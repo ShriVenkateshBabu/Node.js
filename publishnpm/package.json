@@ -1,0 +1,19 @@
+{
+  "name": "shricalc",
+  "version": "1.0.0",
+  "description": "this is the calculator sample by shri",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"hello\""
+  },
+  "keywords": [
+    "calculator",
+    "with",
+    "rem"
+  ],
+  "author": "Shri venkatesh Babu",
+  "license": "ISC",
+  "dependencies": {
+    "shricalc": "^1.0.0"
+  }
+}

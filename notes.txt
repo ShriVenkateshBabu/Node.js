@@ -1,0 +1,440 @@
+// window and global .......
+// Global ---- like bom,dom in browser the node js has the global
+// console.log(window) // window is not defined becoz window is browser not node js
+console.log(global); // since it is for server side scripting and single threaded app 
+// which is used to app authentication , api , crud operations etc...
+// output :
+/*<ref *1> Object [global] {
+  global: [Circular *1],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  structuredClone: [Function: structuredClone],
+  atob: [Getter/Setter],
+  btoa: [Getter/Setter],
+  performance: [Getter/Setter],
+  fetch: [Function: fetch],
+  crypto: [Getter]
+}*/
+in window object for example if we write let age =12 and age =13 it will be overwritten ;; but in node js the scope of the variable wll be only 
+accessible in that particular file only like this separation of code we can call this modules...
+
+To Export the modules like another variable , function like this we need to export this modules first
+then import this inside the file we want to use...
+
+example :: i have test file and calulator file if i want to use tht any fucntion in that calculator
+file use module.export={
+    key : function you want export do not call the function
+}
+after to create const variablename = require("./filename")
+
+to export seperate module lke alone a single function use
+module.exports.myfunc = function(){
+  code to be excuted
+}
+........................................................................................
+Child processes
+child processes is node module used to sub processes within script
+you can perfrom multiple operation using some methods..................................
+
+child_process can be excuted both sync and asynchorusly but if it done async it wont main thread
+mean like it wont block by block excution but if you run sync it will affect main thread excuetin
+like first child_process will excted then it will remaining down element wll excte
+
+exec("command or fileoutput" ,(error,stdout,stderr)={
+  callbackfunction
+})
+error is the command error
+stderr is the command exceuted but error in terminal
+stdout is the output of the command 
+
+execsync is the run at sync process if we give in sync method it would affect the main thread 
+ syntax 
+ execsync(command,options) 
+ ex:
+ const output = execSync('echo hello', {
+    encoding: 'utf-8',  
+});
+
+console.log(output);
+
+the execSync give the ouput in the buffer format to convert in to human readable format use encoding
+utf-8 or the tostringmethod()
+
+to create buffer str
+ const buffer = Buffer.from('Hello, World!', 'utf8');  // Create a buffer from a string
+
+// console.log(buffer);  // Prints <Buffer 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21>
+// console.log(buffer.toString('utf8'));  // Prints Hello, World!
+convert stream of data into binarydata --buffer
+
+
+os module -- 
+tells the information about os 
+such cpus ,platform,arch,networkinterfaces,totalmem,freemem
+
+path module --
+to get path of the file like the extension of the file , directory,basename of the file etx
+
+
+filesystem module --- to manipluate with files and directory
+with file methods 
+we have 
+readFileSync as well readFile(async) - used to read the file 
+writeFileSync as well writeFile(async) - used to add data to file 
+appendFileSync as well appendFile(async) - used to upadet the file without overwriting previous data
+unlinkFileSync as well unlinkFile(async) - used t0 delete a file
+
+example refer -- filesystemModule
+if you async method unlink necessary to use parameter like (error,stdout,stderr) complusory and a call
+back fun
+
+directory methods in fs---
+const fs = require('fs')
+
+// to create a directory use mkdirSync or mkdir means makedirectory
+// const ph = fs.mkdirSync("fsdir")
+
+// To read the content inside the directory use readdirSync or readdir
+// const folderpath = "C:\\Users\\shriv\\Desktop\\Node.js\\FileSystemModule\\filedir\\fsdir"
+// console.log(folderpath)
+// const readcontent= fs.readdirSync(folderpath)
+// console.log( readcontent)
+// returns an array
+
+// to check director exsits use existsSync or exists
+// const chk_dir = fs.existsSync("fsdir") // if you try get outside dir it will be false
+// console.log(chk_dir)
+
+// to delete a directroy use rmdirSync or rmdir
+
+const remove_dir = fs.rmdirSync("fsdir") 
+
+// throw an error because the dirsctory should be empty
+//after emptying it will delete the dir
+
+fs.access("myasyncdir",fs.constants.X_OK,(err)=>{
+    if(err){
+        console.log("error");
+    }
+    else{
+        console.log("file exists")
+    }
+})
+
+// const fp = fs.accessSync("myasyncdir",fs.constants.F_OK)
+// console.log(fp)
+
+// does not return values only throws error
+// for exists we have access 
+// we have fs.constants.R_OK  readable file
+// we have fs.constants.W_OK wrtiable file 
+// we have fs.constants.X_OK excetuable file
+
+//.gitignore that we can use to ignore huge files that we dont want to in our git 
+// like node modules can imported by checking the pakcagejson we can use .gitignore
+to remove the fiels when push our to code to github
+
+.gitignore
+if you want ingnore the file when ypou push the code 
+then use 
+filename/
+this / automatcally tells the git do not inculdes these files into git
+
+semantic verisoing 
+the way of writing 
+for example:"figlet": "^1.8.0"
+^- charat character
+1- major changes
+8- minor changes
+0-patch like bugs fixing
+
+the ^ always checks foe the updated version and if a person use my project after 2years
+then it will install only the package that i hage used in pakcage json
+
+to use for sever side use node js with added advantgge use express
+
+express to install npm init, use npm i express
+
+const express = require("express")
+
+const app = express()
+
+// there various api methods like get,put,post,delete
+// we use these for the restful apis 
+// we use nodemon why it automaticallu restarts the server when ever a upadte made
+// to use nodemon first install nodemon npm i nodemon then it will take care the server 
+// restarting policies etc.......
+// instead node js use nodemon filename js
+
+app.get('/',(req,res)=>{
+    res.send("hello i am get method")
+})
+app.get("/about" ,(req,res)=>{
+    res.send("heloo i am updated get")
+})
+
+app.get("/json",(req,res)=>{
+    res.json({message:"hello",status:"yes json"})
+})
+app.get("/json1",(req,res)=>{
+    res.json({message:"hello",status:"yes 2 json"})
+})
+app.get("/jsonup",(req,res)=>{
+    res.json({message:"hello",status:"up json"})
+})
+
+
+app.get("/htmltag",(req,res)=>{
+    res.send("<p><b>hello welcome to get methods</b></p>")
+
+})
+app.get("/html1",(req,res)=>{
+    res.send("<p style=color:yellow><b>hello welcome to get methods</b></p>")
+
+})
+
+    app.get("/re",(req,res)=>{
+        setTimeout(()=>{
+            res.redirect("/html1")
+        },2000)
+    })
+
+app.get("/htmltag2",(req,res)=>{
+    res.send(`<p><b style="color:red;background-color:blue" >hello welcome to get methods</b></p>`)
+
+})
+app.get("/2",(req,res)=>{
+    res.send("<p><b>hello welcome to get methods 2 whole nodemon manages</b></p>")
+
+})
+app.get("/acc",(req,res)=>{
+    res.send("<p><b>hello welcome to get methods 2 whole nodemon manages</b></p>")
+
+})
+
+environment variable:
+const port = process.env.PORT || 2000;
+//  for dynmaicallu port value becos in
+// aws when we hoist the app the port number get there by the aws so we 
+// need to set an dynamic port
+
+app.listen(port,()=>console.log("port running")) 
+app.listen () to port you want to server to run 
+
+
+const port = process.env.PORT || 2000;
+//  for dynmaicallu port value becos in
+// aws when we hoist the app the port number get there by the aws so we 
+// need to set an dynamic port
+
+// route parameter;
+
+let itm = [{
+    id:1,
+    name:"hello"
+},{
+    id:2,
+    name:"hello",
+}]
+app.get("/about/itm/:itmID?",(req,res)=>{
+    const requestID = req.params.itmID ? parseInt(req.params.itmID) :null;
+
+    if(requestID){
+        const requestitm = itm.find((item)=>item.id===requestID)
+        if(requestitm){
+            res.json(requestitm)
+        }
+        else{
+            res.send("something check id or the code")
+        }
+    }
+    else{
+        res.json(itm)
+    }
+})
+
+app.listen(port,()=>console.log("port running"))
+
+middleware used to connect one http request to another http request;
+
+
+examplefor post::::
+// use middleware to connect to http request to another
+app.use(express.json())
+app.post("/items",(req,res)=>{
+    const item_id = items.length ? items[items.length-1].id + 1 : 1;
+    const new_item = {id:item_id,name:req.body.name}
+    items.push(new_item)
+    res.send(new_item)
+})
+
+//delete 
+app.delete("/stu/:id?",(req,res)=>{
+    
+    let id = parseInt(req.params.id)
+    let stu_req = stu.find((stud)=>stud.id===id)
+    if(!stu_req){
+        res.send("no stu to delete in that id")
+    }    
+    let index = stu.indexOf(stu_req)
+    stu.splice(index,1)
+    res.send(stu)
+    // let id = parseInt(req.params.id)
+    // const fil_stu = stu.filter((stud)=>stud.id!==id)
+    // res.send(fil_stu)
+})
+const express = require('express')
+const app = express()
+const middleWare1 = require("./middlewares/middle1")
+const middleware2 = require('./middlewares/middle2')
+const port = process.env.PORT || 3000;
+app.listen(port,()=>{
+    console.log("port is Running 3000")
+})
+
+app.use(express.json())
+app.use(middleware2.middleware2)
+app.use(middleWare1.middleware)
+
+app.get("/home" ,(req,res)=>{
+    res.send("helo i am get method")
+})
+
+const posts = [{
+    id:1,
+    name:"venky"
+},{
+    id:2,
+    name:"Kiruthi"
+}]
+
+app.get("/posts/:id?",(req,res)=>{
+    const id =parseInt(req.params.id) 
+    const req_post = posts.find((post)=>post.id===id)
+    if(id){
+       if(id){
+          res.send(req_post)
+       }else{
+        res.send("not post in that id")
+       }
+    }
+    else{
+    res.send(posts)
+    }
+})
+app.post("/posts",(req,res)=>{
+    const id = posts.length ? posts[posts.length-1].id + 1 : 1;
+    const new_post = {id:id, name:req.body.name}
+    posts.push(new_post)
+    res.send(posts)
+})
+
+app.put("/posts/:id?",(req,res)=>{
+    const id =parseInt(req.params.id) 
+    const req_post = posts.find((post)=>post.id===id)
+    if(!req_post){
+        res.send("no post to update in that id")
+    };
+    req_post.name=req.body.name
+    res.send(posts)
+})
+
+app.delete("/posts/:id?",(req,res)=>{
+    const id = parseInt(req.params.id)
+    const fitlered_post = posts.filter((post)=>post.id!==id)
+    res.send(fitlered_post)
+})
+
+//middleware it acts bridge between the req and res function are also called as a middleware 
+// middleware like intermediate thing to do job
+// like i have req in someformat i want to send it json we use middlewares
+//custom ,inbulit and thirdpart
+// app.use(middleware2.middleware2)
+// app.use(middleWare1.middleware)
+
+function middleware(req,res,next){
+    console.log('hello i am a middleWare2')
+    next()
+
+}
+module.exports ={
+    middleware2:middleware
+}
+function middleware(req,res,next){
+    console.log('hello i am a middleWare')
+    next()
+
+}
+module.exports ={
+    middleware:middleware
+}
+const express = require('express')
+const app = express()
+const middleWare1 = require("./middlewares/middle1")
+const middleware2 = require('./middlewares/middle2')
+const port = process.env.PORT || 3000;
+app.listen(port,()=>{
+    console.log("port is Running 3000")
+})
+
+app.use(express.json())
+app.use(middleware2.middleware2)
+app.use(middleWare1.middleware)
+
+app.get("/home" ,(req,res)=>{
+    res.send("helo i am get method")
+})
+
+const posts = [{
+    id:1,
+    name:"venky"
+},{
+    id:2,
+    name:"Kiruthi"
+}]
+
+app.get("/posts/:id?",(req,res)=>{
+    const id =parseInt(req.params.id) 
+    const req_post = posts.find((post)=>post.id===id)
+    if(id){
+       if(id){
+          res.send(req_post)
+       }else{
+        res.send("not post in that id")
+       }
+    }
+    else{
+    res.send(posts)
+    }
+})
+app.post("/posts",(req,res)=>{
+    const id = posts.length ? posts[posts.length-1].id + 1 : 1;
+    const new_post = {id:id, name:req.body.name}
+    posts.push(new_post)
+    res.send(posts)
+})
+
+app.put("/posts/:id?",(req,res)=>{
+    const id =parseInt(req.params.id) 
+    const req_post = posts.find((post)=>post.id===id)
+    if(!req_post){
+        res.send("no post to update in that id")
+    };
+    req_post.name=req.body.name
+    res.send(posts)
+})
+
+app.delete("/posts/:id?",(req,res)=>{
+    const id = parseInt(req.params.id)
+    const fitlered_post = posts.filter((post)=>post.id!==id)
+    res.send(fitlered_post)
+})
